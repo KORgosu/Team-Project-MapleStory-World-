@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeBlockFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="c78e6777-aeb8-4ab7-b505-c6b9815d70e6" Language="Lua" Name="ExpItem" Type="Component" Source="None" ModifyTime="2023-02-08T17:19:58.8469677+09:00">
+  <CoreVersion Major="0" Minor="2" />
+  <ScriptVersion Major="1" Minor="0" />
+  <Description />
+  <Properties />
+  <Methods />
+  <EntityEventHandlers>
+    <CodeBlockEntityEventHandler Name="HandleTriggerEnterEvent" EventName="TriggerEnterEvent" Target="self" Scope="All">
+      <Code><![CDATA[
+-- Parameters
+local TriggerBodyEntity = event.TriggerBodyEntity
+--------------------------------------------------------
+local stat = self.Entity.PlayerStat
+
+if TriggerBodyEntity.Name == "ExpItem" then
+	stat:UpExp()
+	TriggerBodyEntity:Destroy()
+end
+
+if TriggerBodyEntity.Name == "Item" then
+	stat:UpExp()
+	TriggerBodyEntity:Destroy()
+end
+]]></Code>
+    </CodeBlockEntityEventHandler>
+  </EntityEventHandlers>
+</CodeBlockFile>

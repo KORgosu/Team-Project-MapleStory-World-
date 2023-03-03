@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeBlockFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="ae5b52ad-0163-49b3-ba17-6008c413b773" Language="Lua" Name="PlayerStat" Type="Component" Source="None" ModifyTime="2023-01-18T19:09:24.6954807+09:00">
+  <CoreVersion Major="0" Minor="2" />
+  <ScriptVersion Major="1" Minor="0" />
+  <Description />
+  <Properties>
+    <CodeBlockProperty Name="Exp" Type="number" DefaultValue="0" SyncDirection="All" />
+    <CodeBlockProperty Name="MaxExp" Type="number" DefaultValue="10" SyncDirection="All" />
+    <CodeBlockProperty Name="Level" Type="number" DefaultValue="1" SyncDirection="All" />
+  </Properties>
+  <Methods>
+    <CodeBlockMethod Name="UpExp" ExecSpace="All">
+      <Return Type="void" SyncDirection="None" />
+      <Arguments />
+      <Code><![CDATA[
+self.Exp = self.Exp + 1
+if self.Exp == self.MaxExp then
+	self:LevelUp()
+end
+]]></Code>
+    </CodeBlockMethod>
+    <CodeBlockMethod Name="LevelUp" ExecSpace="All">
+      <Return Type="void" SyncDirection="None" />
+      <Arguments />
+      <Code><![CDATA[
+self.Level = self.Level + 1
+self.Exp = 0
+self.MaxExp = self.MaxExp * 2
+]]></Code>
+    </CodeBlockMethod>
+  </Methods>
+  <EntityEventHandlers />
+</CodeBlockFile>

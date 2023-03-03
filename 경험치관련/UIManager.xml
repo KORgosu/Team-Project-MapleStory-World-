@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeBlockFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="32b48948-2a89-4921-bb73-82c3638ee3ef" Language="Lua" Name="UIManager" Type="Component" Source="None" ModifyTime="2023-01-18T19:29:36.0333015+09:00">
+  <CoreVersion Major="0" Minor="2" />
+  <ScriptVersion Major="1" Minor="0" />
+  <Description />
+  <Properties>
+    <CodeBlockProperty Name="MyExp" Type="Component" DefaultValue="e43c8079-012e-4e64-aab3-3a2b7d0ffae5:SpriteGUIRendererComponent" SyncDirection="None" />
+    <CodeBlockProperty Name="Level" Type="Component" DefaultValue="8a72c44b-5c45-456b-9c69-56f95fd9debc:TextComponent" SyncDirection="None" />
+  </Properties>
+  <Methods>
+    <CodeBlockMethod Name="OnUpdate" ExecSpace="ClientOnly">
+      <Return Type="void" SyncDirection="None" />
+      <Arguments>
+        <CodeBlockProperty Name="delta" Type="number" SyncDirection="None" />
+      </Arguments>
+      <Code><![CDATA[
+self.MyExp.FillAmount = _UserService.LocalPlayer.PlayerStat.Exp / _UserService.LocalPlayer.PlayerStat.MaxExp
+self.Level.Text = string.format("%d", _UserService.LocalPlayer.PlayerStat.Level)
+
+]]></Code>
+    </CodeBlockMethod>
+  </Methods>
+  <EntityEventHandlers>
+    <CodeBlockEntityEventHandler Name="HandleKeyDownEvent" EventName="KeyDownEvent" Target="service:InputService" Scope="All">
+      <Code><![CDATA[
+-- Parameters
+local key = event.key
+--------------------------------------------------------
+if _UserService.LocalPlayer == nil then
+	return
+end
+
+if key == KeyboardKey.LeftAlt then
+	_UserService.LocalPlayer.PlayerStat:UpExp()
+end
+
+]]></Code>
+    </CodeBlockEntityEventHandler>
+  </EntityEventHandlers>
+</CodeBlockFile>
