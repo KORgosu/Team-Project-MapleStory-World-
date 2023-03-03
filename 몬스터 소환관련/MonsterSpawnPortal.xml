@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeBlockFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="a3a4f035-a7c7-4af7-a5c5-5ffe63c38203" Language="Lua" Name="MonsterSpawnPortal" Type="Component" Source="None" ModifyTime="2023-02-08T11:00:40.8985721+09:00">
+  <CoreVersion Major="0" Minor="2" />
+  <ScriptVersion Major="1" Minor="0" />
+  <Description />
+  <Properties>
+    <CodeBlockProperty Name="isLeft" Type="boolean" DefaultValue="false" SyncDirection="All" />
+    <CodeBlockProperty Name="time" Type="number" DefaultValue="2" SyncDirection="All" />
+    <CodeBlockProperty Name="MaxSpawnCount" Type="number" DefaultValue="3" SyncDirection="All" />
+    <CodeBlockProperty Name="MonsterArray" Type="table" DefaultValue="{}" SyncDirection="None" />
+  </Properties>
+  <Methods>
+    <CodeBlockMethod Name="SetLocation" ExecSpace="All">
+      <Return Type="void" SyncDirection="None" />
+      <Code><![CDATA[
+if self.isLeft then
+	self.Entity.TransformComponent.Scale.x = -1
+end
+]]></Code>
+    </CodeBlockMethod>
+    <CodeBlockMethod Name="SpawnMonster" ExecSpace="Server">
+      <Return Type="void" SyncDirection="None" />
+      <Code><![CDATA[
+local monsterId = "model://f90a2a55-b877-415d-a708-0fe9fcefe813"
+local monsterName = "GoldenSlime_Chase"
+local x = self.Entity.TransformComponent.Position.x
+local y = self.Entity.TransformComponent.Position.y
+local parent = _EntityService:GetEntityByPath("/maps/시작맵")
+local nextNum = #self.MonsterArray + 1
+self.MonsterArray[nextNum] = _SpawnService:SpawnByModelId(monsterId, monsterName, Vector3(x,y,1), parent)
+
+]]></Code>
+    </CodeBlockMethod>
+    <CodeBlockMethod Name="GetCurMonsterCount" ExecSpace="Server">
+      <Return Type="number" DefaultValue="0" SyncDirection="None" />
+      <Code><![CDATA[
+local i = 1
+    while i <= #self.MonsterArray do
+        if isvalid(self.MonsterArray[i]) == true then
+            i = i + 1
+        else
+            table.remove(self.MonsterArray,i)
+        end
+    end
+
+    return #self.MonsterArray
+]]></Code>
+    </CodeBlockMethod>
+    <CodeBlockMethod Name="OnBeginPlay" ExecSpace="ServerOnly">
+      <Return Type="void" SyncDirection="None" />
+      <Code><![CDATA[
+self:SetLocation()
+self.MonsterArray = {}
+]]></Code>
+    </CodeBlockMethod>
+    <CodeBlockMethod Name="OnUpdate" ExecSpace="ServerOnly">
+      <Return Type="void" SyncDirection="None" />
+      <Arguments>
+        <CodeBlockProperty Name="delta" Type="number" SyncDirection="None" />
+      </Arguments>
+      <Code><![CDATA[
+self.time = self.time + delta
+if self.time >= 2 then
+        self.time = 0
+
+	
+        local curMonsterCnt = self:GetCurMonsterCount()
+        if curMonsterCnt == nil then
+            return
+        end
+        if curMonsterCnt < self.MaxSpawnCount then
+            self:SpawnMonster()
+        end
+	    if curMonsterCnt > self.MaxSpawnCount then
+		    self.Entity:Destroy()
+	    end
+    end
+]]></Code>
+    </CodeBlockMethod>
+  </Methods>
+  <EntityEventHandlers>
+    <CodeBlockEntityEventHandler Name="HandleLv1_Complete" EventName="Lv1_Complete" Target="self" Scope="All">
+      <Code><![CDATA[
+-- Parameters
+local SpawnEntityName = event.SpawnEntityName
+local SpawnNumber = event.SpawnNumber
+--------------------------------------------------------
+
+if self.NowSpawnedMonsterTable ~= nil then
+	self.RemoveCount = self.RemoveCount + 1
+	local remainCount = #self.NowSpawnedMonsterTable - self.RemoveCount
+	self:RemainCountNoty(remainCount)
+
+	if remainCount <= 0 then
+		self:MonsterBattleClear()
+		
+	end
+end
+]]></Code>
+    </CodeBlockEntityEventHandler>
+  </EntityEventHandlers>
+</CodeBlockFile>
