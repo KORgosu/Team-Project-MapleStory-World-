@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeBlockFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="b043b10a-5fb0-47b8-8916-337f5a597a9d" Language="Lua" Name="Drop" Type="Component" Source="None" ModifyTime="2023-02-02T15:59:45.2197553+09:00">
+  <CoreVersion Major="0" Minor="2" />
+  <ScriptVersion Major="1" Minor="0" />
+  <Description />
+  <Properties />
+  <Methods>
+    <CodeBlockMethod Name="itemDrop" ExecSpace="ServerOnly">
+      <Return Type="void" SyncDirection="None" />
+      <Arguments />
+      <Code><![CDATA[
+local modelID = "model://maplestoryitem$00c4a9b2eaca4dedb040f504f776fa61"
+local position = self.Entity.TransformComponent.Position
+local parent = _EntityService:GetEntityByPath("/maps/시작맵")
+_SpawnService:SpawnByModelId(modelID, "Item", position, parent);
+]]></Code>
+    </CodeBlockMethod>
+    <CodeBlockMethod Name="ExpDrop" ExecSpace="All">
+      <Return Type="void" SyncDirection="None" />
+      <Code><![CDATA[
+local modelID = "model://280db9a0-1ca8-415e-ac09-4447e28ad2de"
+local position = self.Entity.TransformComponent.Position
+local parent = _EntityService:GetEntityByPath("/maps/시작맵")
+_SpawnService:SpawnByModelId(modelID,"EXP",position,parent)
+]]></Code>
+    </CodeBlockMethod>
+  </Methods>
+  <EntityEventHandlers>
+    <CodeBlockEntityEventHandler Name="HandleDeadEvent" EventName="DeadEvent" Target="self" Scope="All">
+      <Code><![CDATA[
+-- Parameters
+--------------------------------------------------------
+self:itemDrop()
+self:ExpDrop()
+]]></Code>
+    </CodeBlockEntityEventHandler>
+  </EntityEventHandlers>
+</CodeBlockFile>
