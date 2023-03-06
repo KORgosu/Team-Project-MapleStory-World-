@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeBlockFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="PlayerHit" Language="Lua" Name="PlayerHit" Type="Extend" Source="Template" Target="MOD.Core.HitComponent" ModifyTime="2023-01-30T18:29:30.8421104+09:00">
+  <CoreVersion Major="0" Minor="2" />
+  <ScriptVersion Major="1" Minor="2" />
+  <Description />
+  <Properties>
+    <CodeBlockProperty Name="ImmuneCooldown" Type="number" DefaultValue="3" SyncDirection="None" />
+    <CodeBlockProperty Name="LastHitTime" Type="number" DefaultValue="0" SyncDirection="None" />
+  </Properties>
+  <Methods>
+    <CodeBlockMethod Name="IsHitTarget" ExecSpace="All">
+      <Return Type="boolean" SyncDirection="None" />
+      <Arguments>
+        <CodeBlockProperty Name="attackInfo" Type="string" SyncDirection="None" />
+      </Arguments>
+      <Code><![CDATA[
+local currentTime = _UtilLogic.ElapsedSeconds
+if self.LastHitTime + self.ImmuneCooldown < currentTime then
+	self.LastHitTime = _UtilLogic.ElapsedSeconds
+	return true
+end
+
+return false
+]]></Code>
+    </CodeBlockMethod>
+  </Methods>
+  <EntityEventHandlers />
+</CodeBlockFile>

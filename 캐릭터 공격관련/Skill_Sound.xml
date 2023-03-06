@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeBlockFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="88ed0354-b3e6-4ae4-b97f-2816fef25c99" Language="Lua" Name="Skill_Sound" Type="Component" Source="None" ModifyTime="2023-01-19T14:30:51.9983617+09:00">
+  <CoreVersion Major="0" Minor="2" />
+  <ScriptVersion Major="1" Minor="0" />
+  <Description />
+  <Properties />
+  <Methods />
+  <EntityEventHandlers>
+    <CodeBlockEntityEventHandler Name="HandleKeyDownEvent" EventName="KeyDownEvent" Target="service:InputService" Scope="All">
+      <Code><![CDATA[
+-- Parameters
+local key = event.key
+--------------------------------------------------------
+if key == KeyboardKey.LeftControl then
+	_SoundService:PlaySound("02fe29e7670c447cb23c4ee4e5bf5674",0.3)
+	_EffectService:PlayEffect("5f67e1efe0b84d9c9111a21ecfedc937",self.Entity,self.Entity.TransformComponent.Position,0,Vector3(1,1,1),false)
+end
+
+]]></Code>
+    </CodeBlockEntityEventHandler>
+  </EntityEventHandlers>
+</CodeBlockFile>

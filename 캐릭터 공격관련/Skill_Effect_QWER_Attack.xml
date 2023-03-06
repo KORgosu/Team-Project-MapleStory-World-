@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeBlockFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="4fbcb4cb-96e8-4891-9576-27f448c88795" Language="Lua" Name="Skill_Effect_QWER_Attack" Type="Component" Source="None" ModifyTime="2023-01-31T20:44:33.6517971+09:00">
+  <CoreVersion Major="0" Minor="2" />
+  <ScriptVersion Major="1" Minor="0" />
+  <Description />
+  <Properties />
+  <Methods />
+  <EntityEventHandlers>
+    <CodeBlockEntityEventHandler Name="HandleKeyDownEvent" EventName="KeyDownEvent" Target="service:InputService" Scope="All">
+      <Code><![CDATA[
+-- Parameters
+local key = event.key
+--------------------------------------------------------
+if key == KeyboardKey.Q then
+    _EffectService:PlayEffectAttached("00aba007f3cb44d08393c2e862267e11",self.Entity,Vector3(0,0,0), 0, Vector3(1,1,1), false)
+elseif key == KeyboardKey.W then
+    _EffectService:PlayEffectAttached("0113c36409c14eb1900ab5d9cd46b83f",self.Entity,Vector3(0,0,0), 0, Vector3(1,1,1), false)
+elseif key == KeyboardKey.E then
+    _EffectService:PlayEffectAttached("0da34c3dd7ba4c2890107d743b8c7a97",self.Entity,Vector3(0,0,0), 0, Vector3(1,1,1), false)
+elseif key == KeyboardKey.R then
+    _EffectService:PlayEffectAttached("5f67e1efe0b84d9c9111a21ecfedc937",self.Entity,Vector3(0,0,0), 0, Vector3(1,1,1), false)
+end
+]]></Code>
+    </CodeBlockEntityEventHandler>
+  </EntityEventHandlers>
+</CodeBlockFile>
